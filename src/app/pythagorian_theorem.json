@@ -1,0 +1,20 @@
+[
+  {
+    "shape": "triangle",
+    "info": [
+      { "x": 75, "y": 50 },
+      { "x": 100, "y": 75 },
+      { "x": 100, "y": 25 }
+    ],
+    "animations": [
+      {
+        "name": "appear",
+        "t": 2000
+      },
+      {
+        "name": "disappear",
+        "t": 10000
+      }
+    ]
+  }
+]
