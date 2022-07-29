@@ -35,10 +35,7 @@ export class AppComponent {
     //     }
     //   }
     //   this.erase();
-    // for (let shape of this.shapes) {
-    //   this.executeAnimation(currentTime, shape.animations);
-    // }
-    //   this.executeAnimation(currentTime);
+    //   this.executeAnimation(currentTime, this.shapes);
     //   currentTime += this.step;
     // }, this.step);
   }
@@ -54,20 +51,17 @@ export class AppComponent {
   }
 
   // TODO: MAKE THE RECTANGLE STAY AFTER IT HAS BEEN DRAWN.
-  executeAnimation(currentTime, animations) {
-    for (let animation of animations) {
-      if (animation.action == 'move') {
-        if (currentTime > animation.from.t && currentTime < animation.to.t) {
-          const position = this.computePosition(animation, currentTime);
-          // TODO
-          // this.drawShape(animation.shape, )
-          // TODO: Replace by appropriate method
-          this.drawRectangle(
-            position.x,
-            position.y,
-            animation.height,
-            animation.width
-          );
+  executeAnimation(currentTime, shapes) {
+    for (let shape of shapes) {
+      if (shape.animation[currentTime]) {
+        switch (shape.animation[currentTime].name) {
+          case 'appear':
+            this.drawShape(shape);
+            break;
+          case 'move':
+            break;
+          case 'disappear':
+            break;
         }
       }
     }
@@ -98,24 +92,24 @@ export class AppComponent {
   }
 
   // TODO: Finish and make work.
-  drawShape(shape, info) {
-    if (shape == 'rectamgle') {
-      // this.drawRectangle(x, y, height, width);
-    } else if (shape == 'rectangle') {
+  drawShape(name, info) {
+    if (name == 'rectangle') {
+      this.drawRectangle(info);
+    } else if (name == 'triangle') {
       this.drawTriangle(info);
     }
   }
 
-  drawRectangle(x, y, height, width) {
+  drawRectangle(info) {
     this.context.fillStyle = '#FF0000';
-    this.context.fillRect(x, y, height, width);
+    this.context.fillRect(info.x, info.y, info.height, info.width);
   }
 
   drawTriangle(info) {
     this.context.beginPath();
-    this.context.moveTo(75, 50);
-    this.context.lineTo(100, 75);
-    this.context.lineTo(100, 25);
+    this.context.moveTo(info[0].x, info[0].y);
+    this.context.lineTo(info[1].x, info[1].y);
+    this.context.lineTo(info[2].x, info[2].y);
     this.context.fill();
   }
 
